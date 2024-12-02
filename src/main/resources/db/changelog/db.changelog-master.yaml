@@ -1,0 +1,352 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1733080524135-1
+      author: nabiu
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_brand
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+            tableName: brand
+  - changeSet:
+      id: 1733080524135-2
+      author: nabiu
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_car
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: price
+                  type: DECIMAL
+              - column:
+                  name: currency_code
+                  type: INT
+              - column:
+                  name: user_id
+                  type: BIGINT
+              - column:
+                  name: brand_id
+                  type: BIGINT
+              - column:
+                  name: model_id
+                  type: INT
+            tableName: car
+  - changeSet:
+      id: 1733080524135-3
+      author: nabiu
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_currency
+                  name: code
+                  type: INT
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  name: symbol
+                  type: VARCHAR(255)
+            tableName: currency
+  - changeSet:
+      id: 1733080524135-4
+      author: nabiu
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_currencyexchange
+                  name: id
+                  type: INT
+              - column:
+                  name: date
+                  type: DATE
+              - column:
+                  name: currency_code
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: buy_amount
+                  type: DOUBLE
+              - column:
+                  constraints:
+                    nullable: false
+                  name: sell_amount
+                  type: DOUBLE
+            tableName: currency_exchange
+  - changeSet:
+      id: 1733080524135-5
+      author: nabiu
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_model
+                  name: id
+                  type: INT
+              - column:
+                  name: brand_id
+                  type: BIGINT
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+            tableName: model
+  - changeSet:
+      id: 1733080524135-6
+      author: nabiu
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_privilege
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+            tableName: privilege
+  - changeSet:
+      id: 1733080524135-7
+      author: nabiu
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_roles
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: name
+                  type: VARCHAR(20)
+              - column:
+                  name: description
+                  type: VARCHAR(255)
+            tableName: roles
+  - changeSet:
+      id: 1733080524135-8
+      author: nabiu
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                  name: privilege_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: role_id
+                  type: BIGINT
+            tableName: roles_privileges
+  - changeSet:
+      id: 1733080524135-9
+      author: nabiu
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_users
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: username
+                  type: VARCHAR(20)
+              - column:
+                  name: full_name
+                  type: VARCHAR(80)
+              - column:
+                  name: email
+                  type: VARCHAR(50)
+              - column:
+                  name: password
+                  type: VARCHAR(120)
+              - column:
+                  name: type
+                  type: tinyint
+              - column:
+                  constraints:
+                    nullable: false
+                  name: enabled
+                  type: tinyint(1)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: credentials_expired
+                  type: tinyint(1)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: account_locked
+                  type: tinyint(1)
+            tableName: users
+  - changeSet:
+      id: 1733080524135-10
+      author: nabiu
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                  name: role_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: user_id
+                  type: BIGINT
+            tableName: users_roles
+  - changeSet:
+      id: 1733080524135-11
+      author: nabiu
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addUniqueConstraint:
+            columnNames: currency_code
+            constraintName: uc_car_currency_code
+            tableName: car
+  - changeSet:
+      id: 1733080524135-12
+      author: nabiu
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addUniqueConstraint:
+            columnNames: email
+            constraintName: uc_users_email
+            tableName: users
+  - changeSet:
+      id: 1733080524135-13
+      author: nabiu
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addUniqueConstraint:
+            columnNames: username
+            constraintName: uc_users_username
+            tableName: users
+  - changeSet:
+      id: 1733080524135-14
+      author: nabiu
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: brand_id
+            baseTableName: car
+            constraintName: FK_CAR_ON_BRAND
+            referencedColumnNames: id
+            referencedTableName: brand
+  - changeSet:
+      id: 1733080524135-15
+      author: nabiu
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: currency_code
+            baseTableName: car
+            constraintName: FK_CAR_ON_CURRENCY_CODE
+            referencedColumnNames: code
+            referencedTableName: currency
+  - changeSet:
+      id: 1733080524135-16
+      author: nabiu
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: model_id
+            baseTableName: car
+            constraintName: FK_CAR_ON_MODEL
+            referencedColumnNames: id
+            referencedTableName: model
+  - changeSet:
+      id: 1733080524135-17
+      author: nabiu
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: user_id
+            baseTableName: car
+            constraintName: FK_CAR_ON_USER
+            referencedColumnNames: id
+            referencedTableName: users
+  - changeSet:
+      id: 1733080524135-18
+      author: nabiu
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: currency_code
+            baseTableName: currency_exchange
+            constraintName: FK_CURRENCYEXCHANGE_ON_CURRENCY_CODE
+            referencedColumnNames: code
+            referencedTableName: currency
+  - changeSet:
+      id: 1733080524135-19
+      author: nabiu
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: brand_id
+            baseTableName: model
+            constraintName: FK_MODEL_ON_BRAND
+            referencedColumnNames: id
+            referencedTableName: brand
+  - changeSet:
+      id: 1733080524135-20
+      author: nabiu
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: privilege_id
+            baseTableName: roles_privileges
+            constraintName: fk_rolpri_on_privilege
+            referencedColumnNames: id
+            referencedTableName: privilege
+

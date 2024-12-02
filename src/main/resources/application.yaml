@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: "sellcars"
+  datasource:
+    url: jdbc:mysql://mysql:3306/sell_cars_service
+    username: nabius
+    password: qwerty123456
+    driverClassName: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+jwt:
+  secret: 3cfa76ef14937c1c0ea519f8fc057a80fcd04a7420f8e8bcd0a7567c272e007b
+  access-token:
+    ttl-millis: 1000000
+  refresh-token:
+    ttl-millis: 10000000
+
+currency-exchange:
+  url: https://api.privatbank.ua/p24api/pubinfo?exchange&json&coursid=11

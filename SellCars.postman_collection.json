@@ -1,0 +1,557 @@
+{
+	"info": {
+		"_postman_id": "1a7382ab-0856-43ae-b173-d51053a60d38",
+		"name": "SellCars",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2554223"
+	},
+	"item": [
+		{
+			"name": "Auth, Users and Roles",
+			"item": [
+				{
+					"name": "Signup, Signin",
+					"item": [
+						{
+							"name": "Create New User",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"User8\",\r\n    \"fullName\": \"User8\",\r\n    \"password\": \"user8\",\r\n    \"email\": \"user8@test.com\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/auth/signup",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"auth",
+										"signup"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "User Login",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"Admin\",\r\n    \"password\": \"admin\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/auth/signin",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"auth",
+										"signin"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "User",
+					"item": [
+						{
+							"name": "Roles for user",
+							"item": [
+								{
+									"name": "Get roles of user",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{bearer-token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/users/1/roles",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"users",
+												"1",
+												"roles"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Add role for user",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{bearer-token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/users/1/roles/2",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"users",
+												"1",
+												"roles",
+												"2"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete role for user",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/users/1/roles/2",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"users",
+												"1",
+												"roles",
+												"2"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "CurrentUserDetails",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 200\", function () {\r",
+											"  pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Response time is within an acceptable range\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(300);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Content-Type header is application/json\", function () {\r",
+											"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Validate the response schema\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    \r",
+											"    pm.expect(responseData).to.be.an('object');\r",
+											"    pm.expect(responseData.password).to.exist.and.to.be.a('string');\r",
+											"    pm.expect(responseData.username).to.exist.and.to.be.a('string');\r",
+											"    pm.expect(responseData.authorities).to.exist.and.to.be.an('array');\r",
+											"    responseData.authorities.forEach(function(authority) {\r",
+											"        pm.expect(authority).to.be.an('object');\r",
+											"        pm.expect(authority.authority).to.exist.and.to.be.a('string');\r",
+											"    });\r",
+											"    pm.expect(responseData.accountNonExpired).to.exist.and.to.be.a('boolean');\r",
+											"    pm.expect(responseData.accountNonLocked).to.exist.and.to.be.a('boolean');\r",
+											"    pm.expect(responseData.credentialsNonExpired).to.exist.and.to.be.a('boolean');\r",
+											"    pm.expect(responseData.enabled).to.exist.and.to.be.a('boolean');\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearer-token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/users/me",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"users",
+										"me"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete user",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearer-token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/users/12",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"users",
+										"12"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All users",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 500\", function () {\r",
+											"    pm.expect(pm.response.code).to.equal(500);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Response time is less than 500ms\", function () {\r",
+											"  pm.expect(pm.response.responseTime).to.be.below(500);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Response has the required fields\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    \r",
+											"    pm.expect(responseData).to.be.an('object');\r",
+											"    pm.expect(responseData.timestamp).to.exist;\r",
+											"    pm.expect(responseData.status).to.exist;\r",
+											"    pm.expect(responseData.error).to.exist;\r",
+											"    pm.expect(responseData.path).to.exist;\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Timestamp is in a valid date format\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    \r",
+											"    pm.expect(responseData.timestamp).to.match(/^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$/);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Status is a non-negative integer\", function () {\r",
+											"  const responseData = pm.response.json();\r",
+											"  \r",
+											"  pm.expect(responseData.status).to.exist.and.to.be.a('number');\r",
+											"  pm.expect(responseData.status).to.be.at.least(0);\r",
+											"});\r",
+											"pm.test(\"Response time is less than 200ms\", function () {\r",
+											"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearer-token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/users",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Patch User",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Response time is within an acceptable range\", function () {\r",
+											"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Validate the response schema for required fields\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    \r",
+											"    pm.expect(responseData).to.be.an('object');\r",
+											"    pm.expect(responseData).to.have.property('id');\r",
+											"    pm.expect(responseData).to.have.property('username');\r",
+											"    pm.expect(responseData).to.have.property('fullName');\r",
+											"    pm.expect(responseData).to.have.property('email');\r",
+											"    pm.expect(responseData).to.have.property('enabled');\r",
+											"    pm.expect(responseData).to.have.property('credentialsExpired');\r",
+											"    pm.expect(responseData).to.have.property('accountLocked');\r",
+											"    pm.expect(responseData).to.have.property('roles');\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearer-token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 1,\r\n    \"username\": \"Admin\",\r\n    \"fullName\": \"Administator\",\r\n    \"password\": \"$2a$10$R7SV6q7kT60DNgPaX3vXUemGVTHeItGm5K4sfufIOr423V/OLo51u\",\r\n    \"email\": \"admin@test.com\",\r\n    \"userType\": null,\r\n    \"enabled\": true,\r\n    \"credentialsExpired\": true,\r\n    \"accountLocked\": true,\r\n    \"roles\": [\r\n        {\r\n            \"id\": 2,\r\n            \"name\": \"ROLE_MANAGER\",\r\n            \"description\": null\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/users/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"users",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Roles",
+					"item": [
+						{
+							"name": "Get All Roles",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "Get Role By Id",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "Create Role",
+							"request": {
+								"method": "POST",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "Modify Role",
+							"request": {
+								"method": "PATCH",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Role",
+							"request": {
+								"method": "DELETE",
+								"header": []
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Cars",
+			"item": [
+				{
+					"name": "Get all cars",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Add Car",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Get All Brands",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Get brand By Id",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{bearer-token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "bearer-token",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
